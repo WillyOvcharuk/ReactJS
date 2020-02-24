@@ -22,5 +22,6 @@ export default props => (
         <h3>Car name: {props.name}</h3>
         { props.children }
         <p>Year: <strong>{props.year}</strong></p>
+        <button onClick={props.onChangeTitle}>Click</button>
     </div>
 )

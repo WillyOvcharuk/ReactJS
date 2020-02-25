@@ -16,9 +16,22 @@ class App extends Component {
 
   changeTitleHandler = (newTitle) => {
     console.log('clicked')
-
     this.setState({
       pageTitle: newTitle
+    })
+  }
+
+  toggleCarsHandler = () => {
+    this.setState({
+      showCars: !this.state.showCars
+    })
+  }
+
+  handleInput = (event) => {
+    // console.log('handleInput');
+    // console.log(event.target.value);
+    this.setState({
+      pageTitle: event.target.value
     })
   }
 
@@ -34,10 +47,28 @@ class App extends Component {
     return (
       <div style={divStyle}>
           <h1>{this.state.pageTitle}</h1>
+          
+          {/* <input type="text" onChange={this.handleInput}/> */}
 
-          <button onClick={this.changeTitleHandler.bind(this, 'Changed!')}>Change title</button>
+          <button 
+            onClick={this.toggleCarsHandler}
+          >Toggle cars</button>
 
-          <Car 
+          { this.state.showCars
+              ?this.state.cars.map((car, index) => {
+                return (
+                  <Car
+                    key={index} 
+                    name={car.name}
+                    year={car.year}
+                    onChangeTitle={() => this.changeTitleHandler(car.name)}
+                  />
+                )
+              })
+            : null 
+          }
+
+          {/* <Car 
             name={cars[0].name} 
             year={cars[0].year} 
             onChangeTitle={this.changeTitleHandler.bind(this, cars[0].name)}  
@@ -51,7 +82,7 @@ class App extends Component {
             name={cars[2].name} 
             year={cars[2].year} 
             onChangeTitle={() => this.changeTitleHandler(cars[2].name)}
-          />
+          /> */}
             
       </div>
     );

@@ -1,15 +1,17 @@
 import React, { Component } from 'react'; 
 import './App.css';
 import { render } from 'react-dom';
-import Car from './Car/Car'
+import Car from './Car/Car';
+//import ErrorBoundary from './ErrorBoundary/ErrorBoundary.js'
+import Counter from './Counter/Counter'
 
 class App extends Component {
 
   state = {
     cars: [
       {name: 'Ford', year: 2018},
-      {name: 'Audi', year: 2016},
-      {name: 'Mazda', year: 2013},
+      // {name: 'Audi', year: 2016},
+      // {name: 'Mazda', year: 2013},
     ],
     pageTitle: 'React Components'
   }
@@ -45,6 +47,7 @@ class App extends Component {
     this.setState({cars})
   }
 
+  
   render() {
     console.log('render')
 
@@ -58,22 +61,29 @@ class App extends Component {
       <div style={divStyle}>
           <h1>{this.state.pageTitle}</h1>
           
+          <Counter />
+
+          <br />
+
           {/* <input type="text" onChange={this.handleInput}/> */}
 
           <button 
+            style={{marginTop: '20px'}}
             onClick={this.toggleCarsHandler}
           >Toggle cars</button>
 
           { this.state.showCars
               ?this.state.cars.map((car, index) => {
                 return (
-                  <Car
-                    key={index} 
-                    name={car.name}
-                    year={car.year}
-                    onDelete={this.deleteHandler.bind(this, index)}
-                    onChangeName={event => this.onChangeName(event.target.value, index)}
-                  />
+                  //<ErrorBoundary>
+                    <Car
+                      key={index} 
+                      name={car.name}
+                      year={car.year}
+                      onDelete={this.deleteHandler.bind(this, index)}
+                      onChangeName={event => this.onChangeName(event.target.value, index)}
+                    />
+                  //</ErrorBoundary>
                 )
               })
             : null 

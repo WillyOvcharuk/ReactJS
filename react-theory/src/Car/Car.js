@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './Car.css'
+import PropTypes from 'prop-types'
 import withClass from '../hoc/withClass'
 
 /*
@@ -31,6 +32,18 @@ import withClass from '../hoc/withClass'
 )*/
 
 class Car extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.inputRef = React.createRef()
+    }
+
+    componentDidMount() {
+        if(this.props.key === 0) {
+            this.inputRef.current.focus()
+        }
+    }
+
     render() {
         const inputClasses = [classes.input]
 
@@ -44,16 +57,30 @@ class Car extends React.Component {
         //     inputClasses.push(classes.bold)
         // }
         return (
-            <React.Fragment>
+            <div>
                 <h3>Car name: {this.props.name}</h3>
                 { this.props.children }
                 <p>Year: <strong>{this.props.year}</strong></p>
-                <input type="text" onChange={this.props.onChangeName} value={this.props.name}/>
+                <input 
+                    ref={this.inputRef}
+                    type="text" 
+                    onChange={this.props.onChangeName} 
+                    value={this.props.name}
+                    className={inputClasses.join(' ')}
+                />
                 <button onClick={this.props.onDelete}>Delete</button>
-            </React.Fragment>
+            </div>
         )
     }
 
+}
+
+Car.propTypes = {
+    name: PropTypes.string.isRequired,
+    year: PropTypes.number,
+    key: PropTypes.number,
+    onChangeName: PropTypes.func,
+    onDelete: PropTypes.func,
 }
 
 export default withClass(Car, classes.Car)
